@@ -27,6 +27,27 @@ generateEl.addEventListener('click', () => {
 
     resultEl.innerText = generatePassword(hasLower, hasUpper, hasNumber, hasSymbol, length);
 });
+
+// Copy password to clipboard //
+clipboardEl.addEventListener('click', () => {
+    const textarea = document.createElement('textarea');
+    const password = resultEl.innerText;
+
+    if(!password) {
+        return
+    }
+
+    textarea.value = password;
+    document.body.appendChild(textarea);
+    //The HTMLInputElement.select() method selects all the text in a <textarea> element or in an <input> element that includes a text field. 
+    textarea.select();
+    document.execCommand('copy');
+    //The Element.remove() method removes the element from the DOM.
+    textarea.remove();
+    alert('Password copied to clipboard!')
+})
+
+
 //Generate password function
 function generatePassword(lower, upper, number, symbol, length) {
     //1. Initialize password variables
@@ -34,7 +55,7 @@ function generatePassword(lower, upper, number, symbol, length) {
     //3. Loop over length and call generator function for each type
     //4. Add final password to the password var and return
 
-    let generatePassword = '';
+    let generatedPassword = '';
 
     const typesCount = lower + upper + number + symbol;
 
@@ -43,6 +64,24 @@ function generatePassword(lower, upper, number, symbol, length) {
     const typesArr = [{ lower }, { upper }, { number }, { symbol }].filter(item => Object.values(item)[0]);
 
     console.log('typesArr: ', typesArr);
+
+    if(typesCount === 0) {
+        return '';
+    }
+
+for(let i = 0; i < length; i += typesCount) {
+typesArr.forEach(type => {
+    //The Object.keys() method returns an array of a given object's own enumerable property names, iterated in the same order that a normal loop would. 
+    const funcName = Object.keys(type)[0];
+
+
+    generatedPassword += randomFunc[funcName]();
+});
+}
+//The slice() method returns a shallow copy of a portion of an array into a new array object selected from start to end (end not included) where start and end represent the index of items in that array. The original array will not be modified. 
+const finalPassword = generatedPassword.slice(0, length);
+
+return finalPassword;
 
 }
 
