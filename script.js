@@ -33,7 +33,7 @@ clipboardEl.addEventListener('click', () => {
     const textarea = document.createElement('textarea');
     const password = resultEl.innerText;
 
-    if(!password) {
+    if (!password) {
         return
     }
 
@@ -45,7 +45,7 @@ clipboardEl.addEventListener('click', () => {
     //The Element.remove() method removes the element from the DOM.
     textarea.remove();
     alert('Password copied to clipboard!')
-})
+});
 
 
 //Generate password function
@@ -65,23 +65,23 @@ function generatePassword(lower, upper, number, symbol, length) {
 
     console.log('typesArr: ', typesArr);
 
-    if(typesCount === 0) {
+    if (typesCount === 0) {
         return '';
     }
 
-for(let i = 0; i < length; i += typesCount) {
-typesArr.forEach(type => {
-    //The Object.keys() method returns an array of a given object's own enumerable property names, iterated in the same order that a normal loop would. 
-    const funcName = Object.keys(type)[0];
+    for (let i = 0; i < length; i += typesCount) {
+        typesArr.forEach(type => {
+            //The Object.keys() method returns an array of a given object's own enumerable property names, iterated in the same order that a normal loop would. 
+            const funcName = Object.keys(type)[0];
 
 
-    generatedPassword += randomFunc[funcName]();
-});
-}
-//The slice() method returns a shallow copy of a portion of an array into a new array object selected from start to end (end not included) where start and end represent the index of items in that array. The original array will not be modified. 
-const finalPassword = generatedPassword.slice(0, length);
+            generatedPassword += randomFunc[funcName]();
+        });
+    }
+    //The slice() method returns a shallow copy of a portion of an array into a new array object selected from start to end (end not included) where start and end represent the index of items in that array. The original array will not be modified. 
+    const finalPassword = generatedPassword.slice(0, length);
 
-return finalPassword;
+    return finalPassword;
 
 }
 
